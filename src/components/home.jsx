@@ -44,13 +44,13 @@ const Home = () => {
     }
   };
 
-  document.addEventListener("keydown", function (event) {
-    console.log(event);
-    if (event.ctrlKey && (event.key === "s" || event.key === "p")) {
-      alert("Save or Print detected! Please avoid this.");
-      event.preventDefault();
-    }
-  });
+  //   document.addEventListener("keydown", function (event) {
+  //     console.log(event);
+  //     if (event.ctrlKey && (event.key === "s" || event.key === "p")) {
+  //       alert("Save or Print detected! Please avoid this.");
+  //       event.preventDefault();
+  //     }
+  //   });
 
   return (
     <div
