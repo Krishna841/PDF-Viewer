@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+import { pageNavigationPlugin } from "@react-pdf-viewer/page-navigation";
 
 import ProtectedView from "./protected";
 import "./home.scss";
@@ -13,6 +14,8 @@ const Home = () => {
 
   const fileType = ["application/pdf"];
   const inputRef = useRef(null);
+  const pageNavigationPluginInstance = pageNavigationPlugin();
+  const { CurrentPageLabel } = pageNavigationPluginInstance;
 
   const handleChange = (e) => {
     let selectedFile = e.target.files[0];
@@ -90,8 +93,22 @@ const Home = () => {
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
           {viewPdf && (
             <>
+              <div className="home_viewer_pagelabel">
+                <CurrentPageLabel>
+                  {(props) => (
+                    <>
+                      {`Page ${props.currentPage + 1} ${
+                        props.pageLabel === `${props.currentPage + 1}`
+                          ? ""
+                          : `${props.pageLabel}`
+                      } of ${props.numberOfPages}`}
+                    </>
+                  )}
+                </CurrentPageLabel>
+              </div>
               <Viewer
                 fileUrl={viewPdf}
+                plugins={[pageNavigationPluginInstance]}
                 renderProtectedView={(renderProps) => (
                   <ProtectedView {...renderProps} />
                 )}
