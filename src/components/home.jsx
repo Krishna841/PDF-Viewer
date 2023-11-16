@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
@@ -9,8 +9,10 @@ import "./home.scss";
 const Home = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [viewPdf, setViewPdf] = useState(null);
+  const [upload, setUpload] = useState(false);
 
   const fileType = ["application/pdf"];
+  const inputRef = useRef(null);
 
   const handleChange = (e) => {
     let selectedFile = e.target.files[0];
@@ -20,6 +22,7 @@ const Home = () => {
         reader.readAsDataURL(selectedFile);
         reader.onload = (e) => {
           setPdfFile(e.target.result);
+          setUpload(true);
         };
       } else {
         setPdfFile(null);
@@ -38,6 +41,14 @@ const Home = () => {
     }
   };
 
+  document.addEventListener("keydown", function (event) {
+    console.log(event);
+    if (event.ctrlKey && (event.key === "s" || event.key === "p")) {
+      alert("Save or Print detected! Please avoid this.");
+    }
+    event.preventDefault();
+  });
+
   return (
     <div
       className="home"
@@ -46,14 +57,29 @@ const Home = () => {
       }}
     >
       <div className="home_title">PDF Viewer</div>
-      <div className="home_upload">
-        <form onSubmit={handleSubmit}>
-          <input type="file" className="file" onChange={handleChange} />
-          <button type="submit" className="btn btn-success">
-            View PDF
-          </button>
-        </form>
-      </div>
+      <form onSubmit={handleSubmit} className="home_upload">
+        <input
+          type="file"
+          className="home_upload_input"
+          onChange={handleChange}
+          ref={inputRef}
+        />
+        <button
+          onClick={() => {
+            inputRef.current.click();
+          }}
+          className="home_upload_btn"
+        >
+          Upload file
+        </button>
+        <button type="submit" className="view_btn">
+          View PDF
+        </button>
+      </form>
+
+      {upload && (
+        <div className="home_upload_status">File uploaded successfully</div>
+      )}
 
       <div
         className="home_viewer"

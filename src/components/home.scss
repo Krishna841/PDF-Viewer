@@ -12,7 +12,12 @@
   &_upload {
     margin-top: 10px;
     display: flex;
-    flex-direction: column;
+    &_input {
+      display: none;
+    }
+    &_btn {
+      margin-right: 10px;
+    }
   }
   &_viewer {
     height: 80%;
