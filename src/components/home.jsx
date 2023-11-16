@@ -48,8 +48,8 @@ const Home = () => {
     console.log(event);
     if (event.ctrlKey && (event.key === "s" || event.key === "p")) {
       alert("Save or Print detected! Please avoid this.");
+      event.preventDefault();
     }
-    event.preventDefault();
   });
 
   return (
@@ -97,7 +97,7 @@ const Home = () => {
                 <CurrentPageLabel>
                   {(props) => (
                     <>
-                      {`Page ${props.currentPage + 1} ${
+                      {`Page${props.currentPage + 1} ${
                         props.pageLabel === `${props.currentPage + 1}`
                           ? ""
                           : `${props.pageLabel}`
