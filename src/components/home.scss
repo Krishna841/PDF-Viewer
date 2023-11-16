@@ -1,0 +1,25 @@
+.home {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &_title {
+    margin-top: 10px;
+    font-size: 32px;
+    font-weight: 600;
+  }
+  &_upload {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  &_viewer {
+    height: 80%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}

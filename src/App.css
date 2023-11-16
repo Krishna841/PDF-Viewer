@@ -1,0 +1,9 @@
+.App {
+  text-align: center;
+}
+
+@media print {
+  .pdf-container {
+    display: none;
+  }
+}
